@@ -1,0 +1,13 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: quarkus-fruits-api
+  name: quarkus-fruits-api
+spec:
+  port:
+    targetPort: 8080-tcp
+  to:
+    kind: Service
+    name: quarkus-fruits-api
+    weight: 100

@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: quarkus-fruits-api
+    app.kubernetes.io/instance: quarkus-fruits-api
+    app.kubernetes.io/name: quarkus-fruits-api
+    app.kubernetes.io/part-of: quarkus-fruits
+    app.openshift.io/runtime: java
+  name: quarkus-fruits-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: quarkus-fruits-api
+  template:
+    metadata:
+      labels:
+        app: quarkus-fruits-api
+    spec:
+      containers:
+      - name: quarkus-fruits-api
+        imagePullPolicy: Always
+        image: quay.io/anmir78/quarkus-fruits-api:latest
+        env:
+        - name: QUARKUS_REST_CLIENT_FRUITS_DATA_URL
+          value: "http://quarkus-fruits-data:8080/repository"
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /q/health/live
+            port: 8080
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        readinessProbe:
+          httpGet:
+            path: /q/health/ready
+            port: 8080
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1

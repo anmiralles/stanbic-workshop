@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: stanbic-getting-started
+    app.kubernetes.io/instance: stanbic-getting-started
+    app.kubernetes.io/name: stanbic-getting-started
+    app.kubernetes.io/part-of: stanbic-getting-started
+    app.openshift.io/runtime: java
+  name: stanbic-getting-started
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stanbic-getting-started
+  template:
+    metadata:
+      labels:
+        app: stanbic-getting-started
+    spec:
+      containers:
+      - name: stanbic-getting-started
+        imagePullPolicy: Always
+        image: quay.io/anmir78/stanbic-getting-started:latest
+        ports:
+        - containerPort: 8080
+          protocol: TCP

@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-stanbic-getting-started
+  namespace: openshift-gitops
+spec:
+  destination:
+    namespace: stanbic-getting-started
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    directory:
+      recurse: true
+    path: app
+    repoURL: https://github.com/anmiralles/stanbic-getting-started.git
+    targetRevision: main
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true

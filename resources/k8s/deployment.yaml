@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: stanbic-getting-started
+  name: stanbic-getting-started
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stanbic-getting-started
+  template:
+    metadata:
+      labels:
+        app: stanbic-getting-started
+    spec:
+      containers:
+        - image: quay.io/anmir78/quarkus/getting-started:latest
+          imagePullPolicy: Always
+          name: stanbic-getting-started
+          ports:
+            - containerPort: 8080
+              protocol: TCP
